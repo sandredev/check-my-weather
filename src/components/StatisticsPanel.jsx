@@ -28,6 +28,16 @@ export default function StatisticsPanel({ temps, humidities }) {
     humedad: humidities[i] ?? null,
   }))
 
+  function computeDomain(values) {
+    const min = Math.min(...values)
+    const max = Math.max(...values)
+    const diff = max - min || 1
+    return [min - diff * 0.1, max + diff * 0.1]
+  }
+
+  const tempDomain = temps.length > 0 ? computeDomain(temps) : [0, 40]
+  const humDomain = humidities.length > 0 ? computeDomain(humidities) : [0, 100]
+
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -49,7 +59,7 @@ export default function StatisticsPanel({ temps, humidities }) {
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis dataKey="index" tick={{ fontSize: 11 }} />
-            <YAxis tick={{ fontSize: 11 }} unit="°C" />
+            <YAxis tick={{ fontSize: 11 }} unit="°C" domain={tempDomain} />
             <Tooltip />
             <Line type="monotone" dataKey="temperatura" stroke="#ef4444" strokeWidth={2} dot={false} />
           </LineChart>
@@ -62,7 +72,7 @@ export default function StatisticsPanel({ temps, humidities }) {
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis dataKey="index" tick={{ fontSize: 11 }} />
-            <YAxis tick={{ fontSize: 11 }} unit="%" />
+            <YAxis tick={{ fontSize: 11 }} unit="%" domain={humDomain} />
             <Tooltip />
             <Line type="monotone" dataKey="humedad" stroke="#06b6d4" strokeWidth={2} dot={false} />
           </LineChart>

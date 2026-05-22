@@ -1,4 +1,5 @@
 import WeatherDisplay from '../components/WeatherDisplay'
+import WeatherAI from '../components/WeatherAI'
 import { useThingSpeak } from '../hooks/useThingSpeak'
 
 export default function Home() {
@@ -34,6 +35,11 @@ export default function Home() {
         temperature={latest?.temperature}
         humidity={latest?.humidity}
         createdAt={latest?.createdAt}
+      />
+
+      <WeatherAI
+        temperature={latest?.temperature}
+        humidity={latest?.humidity}
       />
 
       {temps.length === 0 && (
