@@ -62,7 +62,7 @@ export default function WeatherAI({ temperature, humidity }) {
 
     try {
       const completion = await openai.chat.completions.create({
-        model: 'deepseek/deepseek-v4-flash:free',
+        model: 'openai/gpt-oss-120b:free',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: buildContext() },
